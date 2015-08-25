@@ -43,8 +43,7 @@ Vagrant.configure(2) do |config|
 	     machine.vm.provision "shell", inline: "mkdir -p ~/ansible_test"
 	     machine.vm.provision "file", source: File.join(File.expand_path("~/.vagrant.d"), 'insecure_private_key'), destination: "~/ansible_test/priv.key"
 		 machine.vm.provision "shell", inline: "chmod 600 /home/vagrant/ansible_test/priv.key"
-		 machine.vm.provision "file", source: File.join('data', 'ansible.cfg'), destination: "~/ansible_test"
-		 machine.vm.provision "file", source: File.join('data', 'inventory'), destination: "~/ansible_test"
+		 machine.vm.provision "shell", inline: "cp /vagrant/data/* /home/vagrant/ansible_test/"
 		 machine.vm.provision "shell", inline: "sudo apt-get update && sudo apt-get install python-pip python-dev git -y"
 		 machine.vm.provision "shell", inline: "sudo pip install PyYAML jinja2 paramiko"
 		 machine.vm.provision "shell", inline: "cd /tmp && git clone https://github.com/ansible/ansible.git"
@@ -52,7 +51,7 @@ Vagrant.configure(2) do |config|
 		 machine.vm.provision "shell", inline: "cd /tmp/ansible && make install"
 		 machine.vm.provision "shell", inline: "sudo mkdir /etc/ansible && sudo cp /tmp/ansible/examples/hosts /etc/ansible/"
 		 machine.vm.provision "shell", inline: "rm -rf /tmp/ansible"
-		 # ansible all -m ping
+		 # to test ansible, try ansible all -m ping 
 	  end
 	end
   end
